@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lean Canvas - WedLevelUp (Profesional)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            color: #334155;
+        }
+
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: auto auto auto;
+            gap: 1rem;
+        }
+
+        .canvas-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem; /* Rounded-md */
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 220px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .canvas-box:focus-within {
+            border-color: #4f46e5; /* Indigo-600 */
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .box-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .box-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #475569;
+            flex-grow: 1;
+        }
+
+        .icon-svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #94a3b8; /* Slate-400 */
+            margin-right: 0.5rem;
+        }
+
+        textarea {
+            flex-grow: 1;
+            width: 100%;
+            border: none;
+            resize: none;
+            outline: none;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: #1e293b;
+            background: transparent;
+        }
+
+        textarea::placeholder { 
+            color: #cbd5e1; 
+            font-style: italic; 
+        }
+
+        /* Desktop Layout Logic */
+        @media (min-width: 1024px) {
+            .span-row-2 { grid-row: span 2; }
+            .cost-structure { grid-column: 1 / span 3; grid-row: 3; } /* Adjusted span */
+            .revenue-streams { grid-column: 4 / span 2; grid-row: 3; } /* Adjusted span */
+        }
+
+        /* Mobile Layout */
+        @media (max-width: 1023px) {
+            .canvas-grid { grid-template-columns: 1fr; }
+            .span-row-2, .cost-structure, .revenue-streams { grid-column: auto; grid-row: auto; }
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Header Controls -->
+    <div class="max-w-[1400px] mx-auto mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-xl font-bold text-slate-800">Lean Canvas Generator</h1>
+            <p class="text-slate-500 text-sm">Project: WedLevelUp</p>
+        </div>
+        <div class="flex gap-3">
+            <button onclick="clearData()" class="btn text-red-600 bg-white border border-red-200 hover:bg-red-50">
+                Reset Data
+            </button>
+            <button onclick="downloadPDF()" class="btn text-white bg-slate-800 hover:bg-slate-700 shadow-sm">
+                Download PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Canvas Container -->
+    <div id="canvas-content" class="max-w-[1400px] mx-auto">
+        <div class="canvas-grid">
+
+            <!-- 1. Problem -->
+            <div class="canvas-box span-row-2">
+                <div class="box-header">
+                    <svg class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span class="box-title">1. Problem</span>
+                </div>
+                <textarea id="problem" placeholder="Daftar 1-3 masalah utama yang dihadapi user (Misal: Stres, Spreadsheet tidak mobile-friendly, Pasangan pasif)"></textarea>
+            </div>
+
+            <!-- 4. Solution -->
+            <div class="canvas-box">
+                <div class="box-header">
+                    <svg class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <span class="box-title">4. Solution</span>
+                </div>
+                <textarea id="solution" placeholder="Fitur utama penyelesai masalah (Misal: Gamified Checklist, Co-op Mode, Dashboard Mobile)"></textarea>
+            </div>
+
+            <!-- 3. Unique Value Proposition -->
+            <div class="canvas-box span-row-2">
+                <div class="box-header">
+                    <svg class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span class="box-title">3. Unique Value Proposition</span>
+                </div>
+                <textarea id="valueProp" placeholder="Pesan tunggal yang jelas, menarik, menyatakan kenapa Anda berbeda (Misal: Level Up Your Wedding - Ubah to-do list jadi game)"></textarea>
+            </div>
+
+            <!-- 9. Unfair Advantage -->
+            <div class="canvas-box">
+                <div class="box-header">
+                    <svg class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <span class="box-title">9. Unfair Advantage</span>
+                </div>
+                <textarea id="unfairAdvantage" placeholder="Sesuatu yang tidak mudah ditiru atau dibeli (Misal: Database lokal lengkap, Algoritma gamifikasi khusus)"></textarea>
+            </div>
+
+            <!-- 2. Customer Segments -->
+            <div class="canvas-box span-row-2">
+                <div class="box-header">
+                    <svg class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <span class="box-title">2. Customer Segments</span>
+                </div>
+                <textarea id="customerSegments" placeholder="Target pelanggan spesifik (Misal: Pasangan Gen Z Tech-Savvy, DIY Couples, Wedding Organizer Muda)"></textarea>
+            </div>
+
+            <!-- 8. Key Metrics -->
+            <div class="canvas-box">
+                <div class="box-header">
+                    <svg class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <span class="box-title">8. Key Metrics</span>
+                </div>
+                <textarea id="keyMetrics" placeholder="Angka kunci untuk mengukur sukses (Misal: Retention Rate, Weekly Active Users, Upgrade Conversion)"></textarea>
+            </div>
+
+            <!-- 5. Channels -->
+            <div class="canvas-box">
+                <div class="box-header">
+                    <svg class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                    </svg>
+                    <span class="box-title">5. Channels</span>
+                </div>
+                <textarea id="channels" placeholder="Jalur menuju pelanggan (Misal: TikTok Content, SEO Blog, Partnership WO)"></textarea>
+            </div>
+
+            <!-- 7. Cost Structure -->
+            <div class="canvas-box cost-structure">
+                <div class="box-header">
+                    <svg class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    <span class="box-title">7. Cost Structure</span>
+                </div>
+                <textarea id="costStructure" placeholder="Biaya tetap dan variabel (Misal: Hosting, Domain, Marketing, Gaji Tim)"></textarea>
+            </div>
+
+            <!-- 6. Revenue Streams -->
+            <div class="canvas-box revenue-streams">
+                <div class="box-header">
+                    <svg class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="box-title">6. Revenue Streams</span>
+                </div>
+                <textarea id="revenueStreams" placeholder="Sumber pendapatan (Misal: Freemium Model, Biaya Langganan Premium, Komisi Vendor)"></textarea>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Logic Simpan Otomatis
+        const textareas = document.querySelectorAll('textarea');
+
+        function loadData() {
+            textareas.forEach(area => {
+                const saved = localStorage.getItem('canvas_pro_' + area.id);
+                if (saved) area.value = saved;
+            });
+        }
+
+        function saveData(e) {
+            localStorage.setItem('canvas_pro_' + e.target.id, e.target.value);
+        }
+
+        textareas.forEach(area => {
+            area.addEventListener('input', saveData);
+        });
+
+        function clearData() {
+            if(confirm('Hapus semua data canvas? Tindakan ini tidak bisa dibatalkan.')) {
+                textareas.forEach(area => {
+                    area.value = '';
+                    localStorage.removeItem('canvas_pro_' + area.id);
+                });
+            }
+        }
+
+        // Logic Ekspor PDF
+        function downloadPDF() {
+            const element = document.getElementById('canvas-content');
+            const opt = {
+                margin:       [10, 10, 10, 10], 
+                filename:     'Lean_Canvas_WedLevelUp.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            };
+
+            // Styling sementara untuk PDF agar rapi
+            const originalStyle = element.style.cssText;
+            element.style.width = '100%';
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.style.cssText = originalStyle;
+            });
+        }
+
+        // Jalankan saat load
+        loadData();
+    </script>
+</body>
+</html>
